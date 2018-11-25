@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件参数校验和非props传值</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+
+<div id="root" v-for="content in ">
+    <child :content="this.content"></child>
+</div>
+<script>
+    Vue.prototype.bus = new Vue();
+    Vue.component('child', {
+        template: '<div @click="hanleClick">{{content}}</div>',
+        props: {
+            content: [String, Number],
+
+        },
+        methods: {
+            hanleClick: function () {
+                return {
+                    this.bus.$emit('change', this.content);
+            }
+
+            }
+        }
+    })
+
+
+    var vm = new Vue({
+        el: '#root',
+        data: {
+            contents: ['12314','123']
+
+        },
+        methods: {
+            handleClick: function () {
+                alert(this.content);
+            }
+        }
+    })
+
+
+</script>
+</body>
+
+</html>
